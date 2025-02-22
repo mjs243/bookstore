@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Book, BookCheck, Bookmark, BookOpen, BookOpenCheck, Package, Search, ShoppingCart } from "lucide-react";
 
 const BookMarketplace = () => {
@@ -103,8 +104,21 @@ const BookMarketplace = () => {
                   <h3 className="text-xl font-semibold">{book.title}</h3>
                   <p className="text-gray-600 mt-1">{book.author}</p>
                 </div>
-                {book.isBundle && <Package className="text-blue-500 mt-2" size={24} />}
-                {!book.isBundle && <BookOpen className="text-blue-500 mt-2" size={24} />}
+
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      {book.isBundle ? (
+                        <Package className="text-blue-500 mt-1.5" size={24} />
+                      ) : (
+                        <BookOpen className="text-blue-500 mt-1.5" size={24} />
+                      )}
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      {book.isBundle ? "This is a book bundle" : "This is a single book"}
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               </CardTitle>
             </CardHeader>
             <CardContent className="flex flex-1 flex-col">
